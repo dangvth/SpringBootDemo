@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tma.SpringBootDemo.dto.EmployeeDTO;
-import com.tma.SpringBootDemo.exception.ResourceNotFoundException;
 import com.tma.SpringBootDemo.service.IEmployeeService;
 
 @RestController
@@ -36,10 +35,9 @@ public class EmployeeController {
 	 * Get an employee by id
 	 * @param id
 	 * @return EmployeeDTO
-	 * @throws ResourceNotFoundException 
 	 */
 	@GetMapping("employees/{id}")
-	public EmployeeDTO getEmployeeById(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
+	public EmployeeDTO getEmployeeById(@PathVariable(value = "id") Long id) {
 		return service.findById(id);
 	}
 	

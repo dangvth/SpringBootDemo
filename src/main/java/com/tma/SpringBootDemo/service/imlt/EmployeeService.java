@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.tma.SpringBootDemo.converter.EmployeeConverter;
 import com.tma.SpringBootDemo.dto.EmployeeDTO;
-import com.tma.SpringBootDemo.exception.ResourceNotFoundException;
 import com.tma.SpringBootDemo.model.Employee;
 import com.tma.SpringBootDemo.repository.EmployeeRepository;
 import com.tma.SpringBootDemo.service.IEmployeeService;
@@ -36,16 +35,13 @@ public class EmployeeService implements IEmployeeService {
 	}
 
 	@Override
-	public EmployeeDTO findById(Long id) throws ResourceNotFoundException {
+	public EmployeeDTO findById(Long id) {
 		
 		EmployeeDTO employeeDTO = new EmployeeDTO();
-		Employee employee = repository.findOneById(id);
 		
-		if (employee != null) {
-			converter.toDTO(employee);
-		} else {
-			throw new ResourceNotFoundException("Employee not found for this id: " + id);
-		}
+		Employee employee = repository.findById(id).get();
+		
+		converter.toDTO(employee);
 		
 		return employeeDTO;
 	}
@@ -57,7 +53,7 @@ public class EmployeeService implements IEmployeeService {
 		
 		if (employeeDTO.getId() != null) {
 			
-			Employee oldEmployee = repository.findOneById(employeeDTO.getId());
+			Employee oldEmployee = repository.findById(employeeDTO.getId()).get();
 			employee = converter.toModel(employeeDTO, oldEmployee);
 			
 		} else {

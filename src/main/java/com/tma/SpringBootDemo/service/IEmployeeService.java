@@ -3,7 +3,6 @@ package com.tma.SpringBootDemo.service;
 import java.util.List;
 
 import com.tma.SpringBootDemo.dto.EmployeeDTO;
-import com.tma.SpringBootDemo.exception.ResourceNotFoundException;
 
 public interface IEmployeeService {
 	/**
@@ -16,9 +15,8 @@ public interface IEmployeeService {
 	 * Find an employee by id
 	 * @param id
 	 * @return an employee dto
-	 * @throws ResourceNotFoundException 
 	 */
-	EmployeeDTO findById(Long id) throws ResourceNotFoundException;
+	EmployeeDTO findById(Long id);
 	
 	/**
 	 * Save an employee
