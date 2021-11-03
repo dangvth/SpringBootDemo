@@ -5,7 +5,14 @@ public class EmployeeDTO extends BaseDTO {
 	private String firstName;
 	private String lastName;
 	private String email;
-	
+	private String[] roles;
+
+	public String[] getRoles() {
+		return roles;
+	}
+	public void setRoles(String[] roles) {
+		this.roles = roles;
+	}
 	public String getFirstName() {
 		return firstName;
 	}
@@ -24,5 +31,5 @@ public class EmployeeDTO extends BaseDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 }

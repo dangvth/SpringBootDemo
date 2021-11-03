@@ -5,10 +5,10 @@ import java.util.NoSuchElementException;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import com.tma.SpringBootDemo.exception.ErrorMessage;
 
@@ -16,14 +16,38 @@ import com.tma.SpringBootDemo.exception.ErrorMessage;
 public class BaseController {
 
 	@ExceptionHandler(NoSuchElementException.class)
-	@ResponseStatus(value = HttpStatus.NOT_FOUND)
-	public ErrorMessage notFoundDataException(Exception ex, WebRequest request) {
-        return new ErrorMessage(new Date(), "Cannot found for this id: " + request.getDescription(false).split("/")[request.getDescription(false).split("/").length-1]);
-    }
+	protected ResponseEntity<ErrorMessage> handleDataNotFound(NoSuchElementException ex) {
+		ErrorMessage errorMessage = new ErrorMessage();
+		errorMessage.setMessage("Given param not exist in the database");
+		errorMessage.setStatus(HttpStatus.NOT_FOUND);
+		errorMessage.setTime(new Date());
+		return new ResponseEntity<ErrorMessage>(errorMessage, errorMessage.getStatus());
+	}
+
+	@ExceptionHandler({ MethodArgumentTypeMismatchException.class, NumberFormatException.class })
+	protected ResponseEntity<ErrorMessage> handleBadRequest(Exception ex) {
+		ErrorMessage errorMessage = new ErrorMessage();
+		errorMessage.setMessage("Given param is not matched to controller");
+		errorMessage.setStatus(HttpStatus.BAD_REQUEST);
+		errorMessage.setTime(new Date());
+		return new ResponseEntity<ErrorMessage>(errorMessage, errorMessage.getStatus());
+	}
 	
 	@ExceptionHandler(EmptyResultDataAccessException.class)
-	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-	public ErrorMessage internalException(Exception ex, WebRequest request) {
-        return new ErrorMessage(new Date(), ex.getMessage());
-    }
+	protected ResponseEntity<ErrorMessage> handleDataNotFound(EmptyResultDataAccessException ex) {
+		ErrorMessage errorMessage = new ErrorMessage();
+		errorMessage.setMessage(ex.getMessage());
+		errorMessage.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+		errorMessage.setTime(new Date());
+		return new ResponseEntity<ErrorMessage>(errorMessage, errorMessage.getStatus());
+	}
+	
+	@ExceptionHandler(Exception.class)
+	protected ResponseEntity<ErrorMessage> handleDataNotFound(Exception ex) {
+		ErrorMessage errorMessage = new ErrorMessage();
+		errorMessage.setMessage("Unknow error");
+		errorMessage.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+		errorMessage.setTime(new Date());
+		return new ResponseEntity<ErrorMessage>(errorMessage, errorMessage.getStatus());
+	}
 }

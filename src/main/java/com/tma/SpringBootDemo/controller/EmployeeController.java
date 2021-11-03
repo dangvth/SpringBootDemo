@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tma.SpringBootDemo.dto.EmployeeDTO;
+import com.tma.SpringBootDemo.exception.NotFoundDataException;
 import com.tma.SpringBootDemo.service.IEmployeeService;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api/employees")
 public class EmployeeController {
 
 	@Autowired
@@ -26,7 +27,7 @@ public class EmployeeController {
 	 * Get all of employee
 	 * @return List<EmployeeDTO> 
 	 */
-	@GetMapping("employees")
+	@GetMapping("")
 	public List<EmployeeDTO> getAllEmployee() {
 		return service.findAll();
 	}
@@ -35,24 +36,25 @@ public class EmployeeController {
 	 * Get an employee by id
 	 * @param id
 	 * @return EmployeeDTO
+	 * @throws NotFoundDataException 
 	 */
-	@GetMapping("employees/{id}")
+	@GetMapping("/{id}")
 	public EmployeeDTO getEmployeeById(@PathVariable(value = "id") Long id) {
 		return service.findById(id);
 	}
 	
-	@PostMapping("employees")
+	@PostMapping("")
 	public EmployeeDTO createEmployee(@RequestBody EmployeeDTO employeeDTO) {
 		return service.save(employeeDTO);
 	}
 	
-	@PutMapping("employees/{id}")
-	public EmployeeDTO createEmployee(@RequestBody EmployeeDTO employeeDTO, @PathVariable(value = "id") Long id) {
+	@PutMapping("/{id}")
+	public EmployeeDTO update(@RequestBody EmployeeDTO employeeDTO, @PathVariable(value = "id") Long id) {
 		employeeDTO.setId(id);
 		return service.save(employeeDTO);
 	}
 	
-	@DeleteMapping("employees")
+	@DeleteMapping("")
 	private void deleteEmployee(@RequestBody Long[] ids) {
 		service.delete(ids);
 	}

@@ -2,15 +2,19 @@ package com.tma.SpringBootDemo.exception;
 
 import java.util.Date;
 
+import org.springframework.http.HttpStatus;
+
 public class ErrorMessage {
 
 	private Date time;
+	private HttpStatus status;
 	private String message;
 	
-	public ErrorMessage(Date time, String message) {
-		super();
-		this.time = time;
-		this.message = message;
+	public HttpStatus getStatus() {
+		return status;
+	}
+	public void setStatus(HttpStatus status) {
+		this.status = status;
 	}
 	public Date getTime() {
 		return time;

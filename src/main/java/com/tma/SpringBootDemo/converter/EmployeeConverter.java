@@ -1,5 +1,6 @@
 package com.tma.SpringBootDemo.converter;
 
+
 import org.springframework.stereotype.Component;
 
 import com.tma.SpringBootDemo.dto.EmployeeDTO;
@@ -25,6 +26,14 @@ public class EmployeeConverter {
 		employeeDTO.setLastName(employee.getLastName());
 		employeeDTO.setEmail(employee.getEmail());
 		employeeDTO.setStatus(employee.getStatus());
+		employeeDTO.setCreatedAt(employee.getCreatedAt());
+		employeeDTO.setModifiedAt(employee.getModifiedAt());
+		
+		String[] roles = new String[employee.getRoles().size()];
+		for (int i = 0; i < employee.getRoles().size(); i++) {
+			roles[i] = employee.getRoles().get(i).getCode();
+		}
+		employeeDTO.setRoles(roles);
 
 		return employeeDTO;
 	}
