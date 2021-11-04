@@ -32,7 +32,7 @@ public class BaseController {
 		errorMessage.setTime(new Date());
 		return new ResponseEntity<ErrorMessage>(errorMessage, errorMessage.getStatus());
 	}
-	
+
 	@ExceptionHandler(EmptyResultDataAccessException.class)
 	protected ResponseEntity<ErrorMessage> handleDataNotFound(EmptyResultDataAccessException ex) {
 		ErrorMessage errorMessage = new ErrorMessage();
@@ -41,7 +41,7 @@ public class BaseController {
 		errorMessage.setTime(new Date());
 		return new ResponseEntity<ErrorMessage>(errorMessage, errorMessage.getStatus());
 	}
-	
+
 	@ExceptionHandler(Exception.class)
 	protected ResponseEntity<ErrorMessage> handleDataNotFound(Exception ex) {
 		ErrorMessage errorMessage = new ErrorMessage();

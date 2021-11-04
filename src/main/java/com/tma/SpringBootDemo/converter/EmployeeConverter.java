@@ -22,6 +22,8 @@ public class EmployeeConverter {
 			employeeDTO.setId(employee.getId());
 		}
 
+		employeeDTO.setUsername(employee.getUsername());
+		employeeDTO.setPassword("********");
 		employeeDTO.setFirstName(employee.getFirstName());
 		employeeDTO.setLastName(employee.getLastName());
 		employeeDTO.setEmail(employee.getEmail());
@@ -47,6 +49,8 @@ public class EmployeeConverter {
 	public Employee toModel(EmployeeDTO employeeDTO) {
 		Employee employee = new Employee();
 
+		employee.setUsername(employeeDTO.getUsername());
+		employee.setPassword(employeeDTO.getPassword());
 		employee.setFirstName(employeeDTO.getFirstName());
 		employee.setLastName(employeeDTO.getLastName());
 		employee.setEmail(employeeDTO.getEmail());
@@ -63,6 +67,8 @@ public class EmployeeConverter {
 	 */
 	public Employee toModel(EmployeeDTO employeeDTO, Employee oldEmployee) {
 
+		oldEmployee.setUsername(employeeDTO.getUsername());
+		oldEmployee.setPassword(employeeDTO.getPassword());
 		oldEmployee.setFirstName(employeeDTO.getFirstName());
 		oldEmployee.setLastName(employeeDTO.getLastName());
 		oldEmployee.setEmail(employeeDTO.getEmail());
