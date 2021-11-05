@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.tma.SpringBootDemo.converter.EmployeeConverter;
 import com.tma.SpringBootDemo.dto.EmployeeDTO;
-import com.tma.SpringBootDemo.model.Employee;
-import com.tma.SpringBootDemo.model.Role;
+import com.tma.SpringBootDemo.entity.Employee;
+import com.tma.SpringBootDemo.entity.Role;
 import com.tma.SpringBootDemo.repository.EmployeeRepository;
 import com.tma.SpringBootDemo.repository.RoleRepository;
 import com.tma.SpringBootDemo.service.IEmployeeService;
@@ -58,16 +58,16 @@ public class EmployeeService implements IEmployeeService, UserDetailsService {
 		if (employeeDTO.getId() != null) {
 
 			Employee oldEmployee = employeeRepository.findById(employeeDTO.getId()).get();
-			employee = converter.toModel(employeeDTO, oldEmployee);
+			employee = converter.toEntity(employeeDTO, oldEmployee);
 
 		} else {
-			employee = converter.toModel(employeeDTO);
+			employee = converter.toEntity(employeeDTO);
 		}
 
 		List<Role> roles = new ArrayList<>();
 
 		for (String role : employeeDTO.getRoles()) {
-			roles.add(roleRepository.findOneByCode(role));
+			roles.add(roleRepository.findOneByName(role));
 		}
 
 		employee.setRoles(roles);

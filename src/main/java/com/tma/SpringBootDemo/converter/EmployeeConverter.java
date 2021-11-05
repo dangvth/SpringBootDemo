@@ -1,19 +1,18 @@
 package com.tma.SpringBootDemo.converter;
 
-
 import org.springframework.stereotype.Component;
 
 import com.tma.SpringBootDemo.dto.EmployeeDTO;
-import com.tma.SpringBootDemo.model.Employee;
+import com.tma.SpringBootDemo.entity.Employee;
 
 @Component
 public class EmployeeConverter {
 
 	/**
-	 * Convert a model (an entity) to a dto
+	 * Convert an employee to an employee DTO
 	 * 
-	 * @param employee
-	 * @return a dto
+	 * @param employee the {@link Employee} to convert
+	 * @return the {@link EmployeeDTO}
 	 */
 	public EmployeeDTO toDTO(Employee employee) {
 		EmployeeDTO employeeDTO = new EmployeeDTO();
@@ -30,10 +29,10 @@ public class EmployeeConverter {
 		employeeDTO.setStatus(employee.getStatus());
 		employeeDTO.setCreatedAt(employee.getCreatedAt());
 		employeeDTO.setModifiedAt(employee.getModifiedAt());
-		
+
 		String[] roles = new String[employee.getRoles().size()];
 		for (int i = 0; i < employee.getRoles().size(); i++) {
-			roles[i] = employee.getRoles().get(i).getCode();
+			roles[i] = employee.getRoles().get(i).getName();
 		}
 		employeeDTO.setRoles(roles);
 
@@ -41,12 +40,12 @@ public class EmployeeConverter {
 	}
 
 	/**
-	 * Convert a dto to a model (an entity)
+	 * Convert an employee DTO to an employee
 	 * 
-	 * @param employeeDTO
-	 * @return a model (an entity)
+	 * @param employeeDTO the {@link EmployeeDTO} to convert
+	 * @return the {@link Employee}
 	 */
-	public Employee toModel(EmployeeDTO employeeDTO) {
+	public Employee toEntity(EmployeeDTO employeeDTO) {
 		Employee employee = new Employee();
 
 		employee.setUsername(employeeDTO.getUsername());
@@ -60,12 +59,13 @@ public class EmployeeConverter {
 	}
 
 	/**
-	 * Convert a dto to an old model (entity)
-	 * @param employeeDTO
-	 * @param oldEmployee
-	 * @return an old model (entity)
+	 * Convert an employee DTO to an old employee
+	 * 
+	 * @param employeeDTO the {@link EmployeeDTO} to convert
+	 * @param oldEmployee the old {@link Employee} to set new value
+	 * @return the {@link Employee}
 	 */
-	public Employee toModel(EmployeeDTO employeeDTO, Employee oldEmployee) {
+	public Employee toEntity(EmployeeDTO employeeDTO, Employee oldEmployee) {
 
 		oldEmployee.setUsername(employeeDTO.getUsername());
 		oldEmployee.setPassword(employeeDTO.getPassword());

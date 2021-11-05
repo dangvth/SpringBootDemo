@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.tma.SpringBootDemo.converter.RoleConverter;
 import com.tma.SpringBootDemo.dto.RoleDTO;
-import com.tma.SpringBootDemo.model.Role;
+import com.tma.SpringBootDemo.entity.Role;
 import com.tma.SpringBootDemo.repository.RoleRepository;
 import com.tma.SpringBootDemo.service.IRoleService;
 
@@ -43,10 +43,10 @@ public class RoleService implements IRoleService {
 		if (roleDTO.getId() != null) {
 			
 			Role oldRole = repository.findById(roleDTO.getId()).get();
-			role = converter.toModel(roleDTO, oldRole);
+			role = converter.toEntity(roleDTO, oldRole);
 			
 		} else {
-			role = converter.toModel(roleDTO);
+			role = converter.toEntity(roleDTO);
 		}
 		
 		return converter.toDTO(repository.save(role));
