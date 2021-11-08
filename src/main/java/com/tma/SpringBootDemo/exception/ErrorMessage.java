@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 public class ErrorMessage {
 
 	private Date time;
-	private HttpStatus status;
+	private int status;
 	private String message;
 
 	/**
@@ -33,7 +33,7 @@ public class ErrorMessage {
 	 * 
 	 * @return the {@link HttpStatus}
 	 */
-	public HttpStatus getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
@@ -42,7 +42,7 @@ public class ErrorMessage {
 	 * 
 	 * @param status the {@link HttpStatus} to set
 	 */
-	public void setStatus(HttpStatus status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 

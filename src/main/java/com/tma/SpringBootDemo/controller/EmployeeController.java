@@ -2,6 +2,7 @@ package com.tma.SpringBootDemo.controller;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tma.SpringBootDemo.dto.EmployeeDTO;
 import com.tma.SpringBootDemo.entity.Employee;
 import com.tma.SpringBootDemo.service.IEmployeeService;
+import com.tma.SpringBootDemo.utils.LogUtil;
 
 /**
  * API for employee
@@ -26,6 +28,8 @@ public class EmployeeController {
 	@Autowired
 	private IEmployeeService service;
 
+	private Logger logger = Logger.getLogger(this.getClass());
+
 	/**
 	 * Get all {@link Employee} and convert to {@link EmployeeDTO}
 	 * 
@@ -33,7 +37,12 @@ public class EmployeeController {
 	 */
 	@GetMapping("")
 	public List<EmployeeDTO> getAllEmployee() {
-		return service.findAll();
+		LogUtil.logDebug(logger, "Get all employees");
+
+		List<EmployeeDTO> employeeDTOs = service.findAll();
+
+		LogUtil.logDebug(logger, "Get all employee done");
+		return employeeDTOs;
 	}
 
 	/**
@@ -44,7 +53,12 @@ public class EmployeeController {
 	 */
 	@GetMapping("/{id}")
 	public EmployeeDTO getEmployeeById(@PathVariable(value = "id") Long id) {
-		return service.findById(id);
+		LogUtil.logDebug(logger, "Get employee by id: " + id);
+
+		EmployeeDTO employeeDTO = service.findById(id);
+
+		LogUtil.logDebug(logger, "Get employee by id: " + id + " done");
+		return employeeDTO;
 	}
 
 	/**
@@ -56,7 +70,12 @@ public class EmployeeController {
 	 */
 	@PostMapping("")
 	public EmployeeDTO createEmployee(@RequestBody EmployeeDTO employeeDTO) {
-		return service.save(employeeDTO);
+		LogUtil.logDebug(logger, "Create new employee");
+
+		employeeDTO = service.save(employeeDTO);
+
+		LogUtil.logDebug(logger, "Create new employee done");
+		return employeeDTO;
 	}
 
 	/**
@@ -69,8 +88,13 @@ public class EmployeeController {
 	 */
 	@PutMapping("/{id}")
 	public EmployeeDTO update(@RequestBody EmployeeDTO employeeDTO, @PathVariable(value = "id") Long id) {
+		LogUtil.logDebug(logger, "Update employee");
+
 		employeeDTO.setId(id);
-		return service.save(employeeDTO);
+		employeeDTO = service.save(employeeDTO);
+
+		LogUtil.logDebug(logger, "Update employee done");
+		return employeeDTO;
 	}
 
 	/**
@@ -80,6 +104,10 @@ public class EmployeeController {
 	 */
 	@DeleteMapping("")
 	private void deleteEmployee(@RequestBody Long[] ids) {
+		LogUtil.logDebug(logger, "Delete employees");
+
 		service.delete(ids);
+
+		LogUtil.logDebug(logger, "Delete employees done");
 	}
 }

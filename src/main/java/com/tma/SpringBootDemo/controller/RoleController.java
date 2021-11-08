@@ -2,6 +2,7 @@ package com.tma.SpringBootDemo.controller;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tma.SpringBootDemo.dto.RoleDTO;
 import com.tma.SpringBootDemo.entity.Role;
 import com.tma.SpringBootDemo.service.IRoleService;
+import com.tma.SpringBootDemo.utils.LogUtil;
 
 /**
  * API for role
@@ -26,6 +28,8 @@ public class RoleController {
 	@Autowired
 	private IRoleService service;
 
+	private Logger logger = Logger.getLogger(this.getClass());
+
 	/**
 	 * Get all {@link Role}
 	 * 
@@ -33,7 +37,12 @@ public class RoleController {
 	 */
 	@GetMapping("")
 	public List<RoleDTO> getAllRole() {
-		return service.findAll();
+		LogUtil.logDebug(logger, "Get all roles");
+
+		List<RoleDTO> roleDTOs = service.findAll();
+
+		LogUtil.logDebug(logger, "Get all roles done");
+		return roleDTOs;
 	}
 
 	/**
@@ -44,7 +53,12 @@ public class RoleController {
 	 */
 	@GetMapping("/{id}")
 	public RoleDTO getRoleById(@PathVariable(value = "id") Long id) {
-		return service.findById(id);
+		LogUtil.logDebug(logger, "Get role by id: " + id);
+
+		RoleDTO roleDTO = service.findById(id);
+
+		LogUtil.logDebug(logger, "Get role by id: " + id + " done");
+		return roleDTO;
 	}
 
 	/**
@@ -55,7 +69,12 @@ public class RoleController {
 	 */
 	@PostMapping("")
 	public RoleDTO createRole(@RequestBody RoleDTO roleDTO) {
-		return service.save(roleDTO);
+		LogUtil.logDebug(logger, "Create new role");
+
+		roleDTO = service.save(roleDTO);
+
+		LogUtil.logDebug(logger, "Create new role done");
+		return roleDTO;
 	}
 
 	/**
@@ -67,8 +86,13 @@ public class RoleController {
 	 */
 	@PutMapping("/{id}")
 	public RoleDTO updateRole(@RequestBody RoleDTO roleDTO, @PathVariable(value = "id") Long id) {
+		LogUtil.logDebug(logger, "Update role");
+
 		roleDTO.setId(id);
-		return service.save(roleDTO);
+		roleDTO = service.save(roleDTO);
+
+		LogUtil.logDebug(logger, "Update role done");
+		return roleDTO;
 	}
 
 	/**
@@ -78,6 +102,10 @@ public class RoleController {
 	 */
 	@DeleteMapping("")
 	private void deleteRole(@RequestBody Long[] ids) {
+		LogUtil.logDebug(logger, "Delete role");
+
 		service.delete(ids);
+
+		LogUtil.logDebug(logger, "Delete role done");
 	}
 }

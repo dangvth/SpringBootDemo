@@ -3,14 +3,19 @@ package com.tma.SpringBootDemo.controller;
 import java.util.Date;
 import java.util.NoSuchElementException;
 
+import org.apache.log4j.Logger;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import com.tma.SpringBootDemo.exception.ErrorMessage;
+import com.tma.SpringBootDemo.utils.LogUtil;
+
 
 /**
  * Handle exception
@@ -18,6 +23,7 @@ import com.tma.SpringBootDemo.exception.ErrorMessage;
 @RestControllerAdvice
 public class BaseController {
 
+	private Logger logger = Logger.getLogger(this.getClass()); 
 	/**
 	 * Handle data not found
 	 * 
@@ -28,9 +34,10 @@ public class BaseController {
 	protected ResponseEntity<ErrorMessage> handleDataNotFound(NoSuchElementException ex) {
 		ErrorMessage errorMessage = new ErrorMessage();
 		errorMessage.setMessage("Given param not exist in the database");
-		errorMessage.setStatus(HttpStatus.NOT_FOUND);
+		errorMessage.setStatus(HttpStatus.NOT_FOUND.value());
 		errorMessage.setTime(new Date());
-		return new ResponseEntity<ErrorMessage>(errorMessage, errorMessage.getStatus());
+		LogUtil.logError(logger, ex.getMessage());
+		return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.NOT_FOUND);
 	}
 
 	/**
@@ -42,10 +49,11 @@ public class BaseController {
 	@ExceptionHandler({ MethodArgumentTypeMismatchException.class, NumberFormatException.class })
 	protected ResponseEntity<ErrorMessage> handleBadRequest(Exception ex) {
 		ErrorMessage errorMessage = new ErrorMessage();
-		errorMessage.setMessage("Given param is not matched to controller");
-		errorMessage.setStatus(HttpStatus.BAD_REQUEST);
+		errorMessage.setMessage("BAD REQUEST-Given param is not matched to controller");
+		errorMessage.setStatus(HttpStatus.BAD_REQUEST.value());
 		errorMessage.setTime(new Date());
-		return new ResponseEntity<ErrorMessage>(errorMessage, errorMessage.getStatus());
+		LogUtil.logError(logger, ex.getMessage());
+		return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.BAD_REQUEST);
 	}
 
 	/**
@@ -58,9 +66,10 @@ public class BaseController {
 	protected ResponseEntity<ErrorMessage> handleDataNotFound(EmptyResultDataAccessException ex) {
 		ErrorMessage errorMessage = new ErrorMessage();
 		errorMessage.setMessage(ex.getMessage());
-		errorMessage.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+		errorMessage.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
 		errorMessage.setTime(new Date());
-		return new ResponseEntity<ErrorMessage>(errorMessage, errorMessage.getStatus());
+		LogUtil.logError(logger, ex.getMessage());
+		return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	/**
@@ -73,8 +82,19 @@ public class BaseController {
 	protected ResponseEntity<ErrorMessage> handleDataNotFound(Exception ex) {
 		ErrorMessage errorMessage = new ErrorMessage();
 		errorMessage.setMessage("Unknown error");
-		errorMessage.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+		errorMessage.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
 		errorMessage.setTime(new Date());
-		return new ResponseEntity<ErrorMessage>(errorMessage, errorMessage.getStatus());
+		LogUtil.logError(logger, ex.getMessage());
+		return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@ExceptionHandler({AccessDeniedException.class, AuthenticationException.class})
+	protected ResponseEntity<ErrorMessage> handleForbidden(Exception ex) {
+		ErrorMessage errorMessage = new ErrorMessage();
+		errorMessage.setMessage("FORBIDDEN-not authentication");
+		errorMessage.setStatus(HttpStatus.FORBIDDEN.value());
+		errorMessage.setTime(new Date());
+		LogUtil.logError(logger, ex.getMessage());
+		return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.FORBIDDEN);
 	}
 }
