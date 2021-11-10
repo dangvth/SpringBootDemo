@@ -8,6 +8,11 @@ import com.tma.SpringBootDemo.dto.RoleDTO;
 import com.tma.SpringBootDemo.entity.Employee;
 import com.tma.SpringBootDemo.entity.Role;
 
+/**
+ * 
+ * @author dangv
+ *
+ */
 @Component
 public class RoleConverter {
 
@@ -28,6 +33,8 @@ public class RoleConverter {
 		roleDTO.setStatus(role.getStatus());
 		roleDTO.setCreatedAt(role.getCreatedAt());
 		roleDTO.setModifiedAt(role.getModifiedAt());
+		roleDTO.setCreatedBy(role.getCreatedBy());
+		roleDTO.setModifiedBy(role.getModifiedBy());
 
 		List<Employee> eList = role.getEmployees();
 		String[] employees = new String[eList.size()];

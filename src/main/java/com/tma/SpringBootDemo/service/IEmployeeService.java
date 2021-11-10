@@ -3,26 +3,33 @@ package com.tma.SpringBootDemo.service;
 import java.util.List;
 
 import com.tma.SpringBootDemo.dto.EmployeeDTO;
+import com.tma.SpringBootDemo.entity.Employee;
 
+/**
+ * 
+ * @author dangv
+ *
+ */
 public interface IEmployeeService {
 
 	/**
-	 * Find all employees and convert to DTO
+	 * Find all {@link Employee} and convert to {@link EmployeeDTO}
 	 * 
 	 * @return the list of {@link EmployeeDTO}
 	 */
 	List<EmployeeDTO> findAll();
 
 	/**
-	 * Find an employee by id and convert to DTO
+	 * Find the {@link Employee} by id and convert to the {@link EmployeeDTO}
 	 * 
 	 * @param id the id to find
 	 * @return the {@link EmployeeDTO}
 	 */
-	EmployeeDTO findById(Long id) ;
+	EmployeeDTO findById(Long id);
 
 	/**
-	 * Convert an employee DTO to employee and save to datasource
+	 * Convert the {@link EmployeeDTO} to the {@link Employee} and save to
+	 * datasource
 	 * 
 	 * @param employeeDTO the {@link EmployeeDTO} to save
 	 * @return the {@link EmployeeDTO}
@@ -30,9 +37,10 @@ public interface IEmployeeService {
 	EmployeeDTO save(EmployeeDTO employeeDTO);
 
 	/**
-	 * Delete the employees by list of id
+	 * Delete the {@link Employee} by id
 	 * 
-	 * @param ids the list of id to delete
+	 * @param id the id to delete
+	 * @return the string
 	 */
-	void delete(Long[] ids);
+	String delete(Long id);
 }

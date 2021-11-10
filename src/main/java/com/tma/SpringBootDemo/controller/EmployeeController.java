@@ -20,6 +20,9 @@ import com.tma.SpringBootDemo.utils.LogUtil;
 
 /**
  * API for employee
+ * 
+ * @author dangv
+ *
  */
 @RestController
 @RequestMapping("/api/employees")
@@ -84,7 +87,7 @@ public class EmployeeController {
 	 * 
 	 * @param employeeDTO the {@link EmployeeDTO} to update
 	 * @param id          the id to update
-	 * @return
+	 * @return the {@link EmployeeDTO}
 	 */
 	@PutMapping("/{id}")
 	public EmployeeDTO update(@RequestBody EmployeeDTO employeeDTO, @PathVariable(value = "id") Long id) {
@@ -98,16 +101,17 @@ public class EmployeeController {
 	}
 
 	/**
-	 * Delete the list of {@link Employee} by list of id
+	 * Delete the {@link Employee} by id
 	 * 
-	 * @param ids the list of id
+	 * @param id the id to delete
 	 */
-	@DeleteMapping("")
-	private void deleteEmployee(@RequestBody Long[] ids) {
-		LogUtil.logDebug(logger, "Delete employees");
+	@DeleteMapping("/{id}")
+	private String deleteEmployeeById(@PathVariable(value = "id") Long id) {
+		LogUtil.logDebug(logger, "Delete employee by id: " + id);
 
-		service.delete(ids);
+		String response = service.delete(id);
 
-		LogUtil.logDebug(logger, "Delete employees done");
+		LogUtil.logDebug(logger, "Delete employee by id: " + id + "done");
+		return response;
 	}
 }

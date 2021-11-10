@@ -4,6 +4,11 @@ import java.util.Date;
 
 import org.springframework.http.HttpStatus;
 
+/**
+ * 
+ * @author dangv
+ *
+ */
 public class ErrorMessage {
 
 	private Date time;

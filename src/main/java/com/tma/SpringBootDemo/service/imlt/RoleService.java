@@ -14,6 +14,11 @@ import com.tma.SpringBootDemo.repository.RoleRepository;
 import com.tma.SpringBootDemo.service.IRoleService;
 import com.tma.SpringBootDemo.utils.LogUtil;
 
+/**
+ * 
+ * @author dangv
+ *
+ */
 @Service
 public class RoleService implements IRoleService {
 
@@ -68,14 +73,13 @@ public class RoleService implements IRoleService {
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public String delete(Long id) {
 		LogUtil.logDebug(logger, "Delete role");
 
-		for (Long id : ids) {
-			repository.deleteById(id);
-		}
+		repository.deleteById(id);
 
 		LogUtil.logDebug(logger, "Delete role done");
+		return "Delete successful";
 	}
 
 }

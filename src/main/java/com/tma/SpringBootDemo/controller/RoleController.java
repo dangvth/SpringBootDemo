@@ -20,6 +20,9 @@ import com.tma.SpringBootDemo.utils.LogUtil;
 
 /**
  * API for role
+ * 
+ * @author dangv
+ *
  */
 @RestController
 @RequestMapping("/api/roles")
@@ -100,12 +103,13 @@ public class RoleController {
 	 * 
 	 * @param ids the list of id to delete
 	 */
-	@DeleteMapping("")
-	private void deleteRole(@RequestBody Long[] ids) {
-		LogUtil.logDebug(logger, "Delete role");
+	@DeleteMapping("/{id}")
+	private String deleteRole(@PathVariable(value = "id") Long id) {
+		LogUtil.logDebug(logger, "Delete role by id: " + id);
 
-		service.delete(ids);
+		String response = service.delete(id);
 
-		LogUtil.logDebug(logger, "Delete role done");
+		LogUtil.logDebug(logger, "Delete role by id: " + id + " done");
+		return response;
 	}
 }

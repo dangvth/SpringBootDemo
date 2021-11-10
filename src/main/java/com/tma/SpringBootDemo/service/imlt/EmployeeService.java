@@ -19,6 +19,11 @@ import com.tma.SpringBootDemo.repository.RoleRepository;
 import com.tma.SpringBootDemo.service.IEmployeeService;
 import com.tma.SpringBootDemo.utils.LogUtil;
 
+/**
+ * 
+ * @author dangv
+ *
+ */
 @Service
 public class EmployeeService implements IEmployeeService, UserDetailsService {
 
@@ -64,7 +69,6 @@ public class EmployeeService implements IEmployeeService, UserDetailsService {
 		Employee employee = new Employee();
 
 		if (employeeDTO.getId() != null) {
-
 			Employee oldEmployee = employeeRepository.findById(employeeDTO.getId()).get();
 			employee = converter.toEntity(employeeDTO, oldEmployee);
 
@@ -85,20 +89,19 @@ public class EmployeeService implements IEmployeeService, UserDetailsService {
 	}
 
 	@Override
-	public void delete(Long[] ids) {
-		LogUtil.logDebug(logger, "Delete employees");
+	public String delete(Long id) {
+		LogUtil.logDebug(logger, "Delete employee by id: " + id);
 
-		for (Long id : ids) {
-			employeeRepository.deleteById(id);
-		}
+		employeeRepository.deleteById(id);
 
-		LogUtil.logDebug(logger, "Delete employees done");
+		LogUtil.logDebug(logger, "Delete employee by id: " + id + " done");
+		return "Delete successful";
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		LogUtil.logDebug(logger, "Load employee by username: " + username);
-
+		
 		Employee employee = employeeRepository.findOneByUsername(username);
 
 		if (employee == null) {

@@ -2,21 +2,25 @@ package com.tma.SpringBootDemo.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import com.tma.SpringBootDemo.dto.RoleDTO;
+import com.tma.SpringBootDemo.entity.Role;
 
+/**
+ * 
+ * @author dangv
+ *
+ */
 public interface IRoleService {
 
 	/**
-	 * Find all roles and convert to DTO
+	 * Find all {@link Role} and convert to {@link RoleDTO}
 	 * 
 	 * @return the list of {@link RoleDTO}
 	 */
 	List<RoleDTO> findAll();
 
 	/**
-	 * Find a role by id and convert to DTO
+	 * Find the {@link Role} by id and convert to the {@link RoleDTO}
 	 * 
 	 * @param id the id to find
 	 * @return the {@link RoleDTO}
@@ -24,7 +28,7 @@ public interface IRoleService {
 	RoleDTO findById(Long id);
 
 	/**
-	 * Convert a role DTO to role and save to datasource
+	 * Convert the {@link RoleDTO} to the {@link Role} and save to datasource
 	 * 
 	 * @param roleDTO the {@link RoleDTO} to save
 	 * @return the {@link RoleDTO}
@@ -34,7 +38,8 @@ public interface IRoleService {
 	/**
 	 * Delete the roles by list of id
 	 * 
-	 * @param ids the list of id to delete
+	 * @param id the id to delete
+	 * @return the string
 	 */
-	void delete(Long[] ids);
+	String delete(Long id);
 }

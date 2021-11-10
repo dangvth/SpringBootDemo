@@ -22,6 +22,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Employee entity
+ * 
+ * @author dangv
+ *
  */
 @Entity
 @Table(name = "employee")

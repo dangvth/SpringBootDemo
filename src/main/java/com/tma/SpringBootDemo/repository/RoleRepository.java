@@ -4,6 +4,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.tma.SpringBootDemo.entity.Role;
 
+/**
+ * 
+ * @author dangv
+ *
+ */
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
 	/**

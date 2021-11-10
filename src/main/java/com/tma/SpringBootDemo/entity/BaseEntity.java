@@ -9,12 +9,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  * The base entity contains all the same properties and methods
+ * 
+ * @author dangv
+ *
  */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
@@ -33,7 +38,51 @@ public abstract class BaseEntity {
 	private Date modifiedAt;
 
 	@Column
+	@CreatedBy
+	private String createdBy;
+
+	@Column
+	@LastModifiedBy
+	private String modifiedBy;
+
+	@Column
 	private Integer status;
+
+	/**
+	 * Get created by
+	 * 
+	 * @return the createdBy
+	 */
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	/**
+	 * Set created by
+	 * 
+	 * @param createdBy the createdBy to set
+	 */
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	/**
+	 * Get modified by
+	 * 
+	 * @return the modifiedBy
+	 */
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+
+	/**
+	 * Set modified by
+	 * 
+	 * @param modifiedBy the modifiedBy to set
+	 */
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
 
 	/**
 	 * Get created date

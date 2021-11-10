@@ -18,16 +18,16 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tma.SpringBootDemo.exception.ErrorMessage;
 
 /**
+ * 
  * @author dangv
  *
  */
 public class SimpleAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
 	private Logger logger = Logger.getLogger(this.getClass());
-	
+
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
@@ -40,9 +40,9 @@ public class SimpleAuthenticationEntryPoint implements AuthenticationEntryPoint 
 		String resBody = objectMapper.writeValueAsString(map);
 		logger.error(map.get("message"));
 		PrintWriter printWriter = response.getWriter();
-        printWriter.print(resBody);
-        printWriter.flush();
-        printWriter.close();
+		printWriter.print(resBody);
+		printWriter.flush();
+		printWriter.close();
 	}
 
 }

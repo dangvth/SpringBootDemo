@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.tma.SpringBootDemo.utils;
 
 import org.apache.log4j.Logger;

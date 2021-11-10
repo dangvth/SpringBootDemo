@@ -1,5 +1,12 @@
 package com.tma.SpringBootDemo.dto;
 
+import java.util.Date;
+
+/**
+ * 
+ * @author dangv
+ *
+ */
 public class EmployeeDTO extends BaseDTO {
 
 	private String username;
@@ -8,6 +15,32 @@ public class EmployeeDTO extends BaseDTO {
 	private String lastName;
 	private String email;
 	private String[] roles;
+
+	public EmployeeDTO(Long id, Date createdAt, Date modifiedAt, Integer status, String username, String password,
+			String firstName, String lastName, String email, String[] roles) {
+		super(id, createdAt, modifiedAt, status);
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.roles = roles;
+	}
+
+	public EmployeeDTO(String username, String password, String firstName, String lastName, String email,
+			String[] roles) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.roles = roles;
+	}
+
+	public EmployeeDTO() {
+		super();
+	}
 
 	public String getUsername() {
 		return username;

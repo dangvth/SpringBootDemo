@@ -10,6 +10,9 @@ import javax.persistence.Table;
 
 /**
  * Role entity
+ * 
+ * @author dangv
+ *
  */
 @Entity
 @Table(name = "role")

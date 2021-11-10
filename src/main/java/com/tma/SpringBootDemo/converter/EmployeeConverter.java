@@ -5,6 +5,11 @@ import org.springframework.stereotype.Component;
 import com.tma.SpringBootDemo.dto.EmployeeDTO;
 import com.tma.SpringBootDemo.entity.Employee;
 
+/**
+ * 
+ * @author dangv
+ *
+ */
 @Component
 public class EmployeeConverter {
 
@@ -29,6 +34,8 @@ public class EmployeeConverter {
 		employeeDTO.setStatus(employee.getStatus());
 		employeeDTO.setCreatedAt(employee.getCreatedAt());
 		employeeDTO.setModifiedAt(employee.getModifiedAt());
+		employeeDTO.setCreatedBy(employee.getCreatedBy());
+		employeeDTO.setModifiedBy(employee.getModifiedBy());
 
 		String[] roles = new String[employee.getRoles().size()];
 		for (int i = 0; i < employee.getRoles().size(); i++) {

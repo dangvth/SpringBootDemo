@@ -4,6 +4,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.tma.SpringBootDemo.entity.Employee;
 
+/**
+ * 
+ * @author dangv
+ *
+ */
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
 	/**
