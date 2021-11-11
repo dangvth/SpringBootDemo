@@ -43,4 +43,12 @@ public interface IEmployeeService {
 	 * @return the string
 	 */
 	String delete(Long id);
+
+	/**
+	 * Search employee by name
+	 * 
+	 * @param name the name to searchh
+	 * @return the list of {@link EmployeeDTO}
+	 */
+	List<EmployeeDTO> findAllByQueryDSL(String name);
 }

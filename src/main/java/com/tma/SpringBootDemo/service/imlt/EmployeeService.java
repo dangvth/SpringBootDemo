@@ -1,6 +1,7 @@
 package com.tma.SpringBootDemo.service.imlt;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -16,6 +17,7 @@ import com.tma.SpringBootDemo.entity.Employee;
 import com.tma.SpringBootDemo.entity.Role;
 import com.tma.SpringBootDemo.repository.EmployeeRepository;
 import com.tma.SpringBootDemo.repository.RoleRepository;
+import com.tma.SpringBootDemo.search.EmployeePredicate;
 import com.tma.SpringBootDemo.service.IEmployeeService;
 import com.tma.SpringBootDemo.utils.LogUtil;
 
@@ -110,6 +112,20 @@ public class EmployeeService implements IEmployeeService, UserDetailsService {
 
 		LogUtil.logDebug(logger, "Load employee by username: " + username + " done");
 		return employee;
+	}
+
+	@Override
+	public List<EmployeeDTO> findAllByQueryDSL(String name) {
+		List<EmployeeDTO> employeeDTOs = new ArrayList<>();
+		
+		Iterator<Employee> resultList = employeeRepository.findAll(EmployeePredicate.nameContain(name)).iterator();
+		
+		while (resultList.hasNext()) {
+			Employee employee = (Employee) resultList.next();
+			employeeDTOs.add(converter.toDTO(employee));
+		}
+		
+		return employeeDTOs;
 	}
 
 }

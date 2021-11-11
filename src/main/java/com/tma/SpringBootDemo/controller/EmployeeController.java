@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tma.SpringBootDemo.dto.EmployeeDTO;
@@ -113,5 +114,22 @@ public class EmployeeController {
 
 		LogUtil.logDebug(logger, "Delete employee by id: " + id + "done");
 		return response;
+	}
+
+	/**
+	 * Search the {@link Employee} by name (firstname or lastname) and convert to
+	 * the {@link EmployeeDTO}
+	 * 
+	 * @param name the name to search
+	 * @return the list of {@link EmployeeDTO}
+	 */
+	@GetMapping("/search")
+	public List<EmployeeDTO> getAllEmployeeByQueryDSL(@RequestParam(value = "name") String name) {
+		LogUtil.logDebug(logger, "Search employee by name: " + name);
+
+		List<EmployeeDTO> employeeDTOs = service.findAllByQueryDSL(name);
+
+		LogUtil.logDebug(logger, "Search employee by name: " + name + " done");
+		return employeeDTOs;
 	}
 }

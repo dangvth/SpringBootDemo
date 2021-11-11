@@ -297,4 +297,36 @@ class EmployeeControllerTest {
 		mockMvc.perform(mockRequest).andExpect(status().isInternalServerError())
 				.andExpect(jsonPath("$.message", is("Unknown error")));
 	}
+	
+	@Test
+	void searchEmployeeByName_success() throws Exception {
+
+		Mockito.when(employeeService.findAllByQueryDSL("a")).thenReturn(Arrays.asList(employeeDTO_1, employeeDTO_2));
+
+		mockRequest = MockMvcRequestBuilders.get("/api/employees/search?name=a").contentType(MediaType.APPLICATION_JSON)
+				.with(user("admin").password("admin").authorities(new SimpleGrantedAuthority("admin")));
+
+		mockMvc.perform(mockRequest).andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(2)))
+				.andExpect(jsonPath("$[1].firstName", is("A")));
+	}
+
+	@Test
+	void searchEmployeeByName_unauthorized() throws Exception {
+
+		mockRequest = MockMvcRequestBuilders.get("/api/employees/search?name=a").contentType(MediaType.APPLICATION_JSON);
+
+		mockMvc.perform(mockRequest).andExpect(status().isUnauthorized())
+				.andExpect(jsonPath("$.message", is("UNAUTHORIZED-not authentication")));
+	}
+
+	@Test
+	void searchEmployeeByName_forbidden() throws Exception {
+
+		mockRequest = MockMvcRequestBuilders.get("/api/employees/search?name=a").contentType(MediaType.APPLICATION_JSON)
+				.with(user("user").password("user").authorities(new SimpleGrantedAuthority("user")));
+
+		mockMvc.perform(mockRequest).andExpect(status().isForbidden())
+				.andExpect(jsonPath("$.message", is("FORBIDDEN-not authentication")));
+	}
+
 }
